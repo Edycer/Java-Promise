@@ -14,6 +14,8 @@
 /.idea/workspace.xml
 /.idea/tasks.xml
 /.idea/libraries/*.xml
+/build
+
 
 .DS_Store
 
