@@ -1,4 +1,4 @@
-package com.java_promise.tests.promise;
+package com.java_promise.common;
 
 /**
  * Created by Philip on 2/03/2016.

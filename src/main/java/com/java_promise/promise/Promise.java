@@ -1,4 +1,6 @@
-package com.java_promise.tests.promise;
+package com.java_promise.promise;
+
+import com.java_promise.common.State;
 
 /**
  * Created by Philip on 23/02/2016.

@@ -1,6 +1,6 @@
-package com.java_promise.tests.genericpromise;
+package com.java_promise.genericpromise;
 
-import com.java_promise.tests.promise.State;
+import com.java_promise.common.State;
 
 /**
  * Created by Philip on 2/03/2016.
