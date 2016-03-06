@@ -1,12 +1,12 @@
-import Promise.Promise;
-import org.junit.Assert;
+package com.java_promise.tests.genericpromise;
+
+import com.java_promise.tests.genericpromise.Promise;
 import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Created by Philip on 25/02/2016.
  */
-public class PromiseTest {
+public class Generic_Promise_Test {
 
     private Promise testObject;
 

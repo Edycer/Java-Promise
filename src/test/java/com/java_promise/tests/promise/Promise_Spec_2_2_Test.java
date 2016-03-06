@@ -1,4 +1,6 @@
-import Promise.Promise;
+package com.java_promise.tests.promise;
+
+import com.java_promise.tests.genericpromise.Promise;
 import org.junit.Before;
 
 /**
