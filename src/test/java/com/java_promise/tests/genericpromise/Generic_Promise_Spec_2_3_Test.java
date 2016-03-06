@@ -21,7 +21,7 @@ public class Generic_Promise_Spec_2_3_Test {
 //  2.3.1 If promise and x refer to the same object, reject promise with a TypeError as the reason.
 
 //  2.3.2
-//  If x is a promise, adopt its state [3.4]:
+//  If x is a promise, adopt its State [3.4]:
 //  2.3.2.1 If x is pending, promise must remain pending until x is fulfilled or rejected.
 //  2.3.2.2 If/when x is fulfilled, fulfill promise with the same value.
 //  2.3.2.3 If/when x is rejected, reject promise with the same reason.
