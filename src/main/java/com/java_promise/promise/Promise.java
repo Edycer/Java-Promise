@@ -7,15 +7,19 @@ import com.java_promise.common.State;
  */
 public class Promise {
 
-    private State state;
+    public State State;
 
     public Promise() {
 
-        state = State.Pending;
+        State = State.Pending;
     }
 
     public void Resolved() {
 
+
+    }
+
+    public void Reject(Exception ex) {
 
     }
 }
