@@ -7,7 +7,15 @@ import com.java_promise.common.State;
  */
 public class Promise<TypeT> {
 
+    //
+    //  The current state of the promise.
+    //
     public State State;
+
+    //
+    //  The result of the promise.
+    //
+    public TypeT Result;
 
     public Promise() {
 
@@ -15,15 +23,29 @@ public class Promise<TypeT> {
     }
 
     //
-    // Sets the promise to resolved and actions registered thenables.
+    //  Sets the promise to resolved and actions registered thenables.
     //
     public void Resolve(TypeT result) {
 
+        if (State != State.Pending) {
+
+            return;
+        }
+
         State = State.Resolved;
+
+        Result = result;
     }
 
-
+    //
+    //  Sets the promise to rejected and actions registered catchers.
+    //
     public void Reject(Exception e) {
+
+        if (State != State.Pending) {
+
+            return;
+        }
 
         State = State.Rejected;
     }
