@@ -22,6 +22,9 @@ public class Promise {
         State = State.Pending;
     }
 
+    /**
+     * Sets the promise to resolved and actions registered thenables.
+     */
     public void Resolve() {
 
         if (State != State.Pending) {
@@ -31,6 +34,10 @@ public class Promise {
         State = State.Resolved;
     }
 
+    /**
+     * Sets the promise to rejected and actions registered catchers.
+     * @param ex Exception to be passed to catchers.
+     */
     public void Reject(Exception ex) {
 
         if (State != State.Pending) {
