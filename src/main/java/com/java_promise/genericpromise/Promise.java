@@ -24,5 +24,7 @@ public class Promise<TypeT> {
 
 
     public void Reject(Exception e) {
+
+        State = State.Rejected;
     }
 }
