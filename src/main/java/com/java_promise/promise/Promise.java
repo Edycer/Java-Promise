@@ -23,6 +23,15 @@ public class Promise {
     }
 
     /**
+     *
+     * @param onFulfilled
+     * @param onRejected
+     */
+    public Promise(ResolveCallback onFulfilled, RejectCallback onRejected) {
+
+    }
+
+    /**
      * Sets the promise to resolved and actions registered thenables.
      */
     public void Resolve() {
