@@ -68,7 +68,31 @@ public class Generic_Promise_Spec_2_1_Test {
         assertEquals(1, testObject.Result);
     }
 
+    //
     //  2.1.3
-    //  2.1.3.1 When rejected a promise must not transition to any other State.
-    //  2.1.3.2 When rejected a promise must have a reason, which must not change.
+    //
+
+    //  2.1.3.1
+    @Test
+    public void When_rejected_a_promise_must_not_transition_to_any_other_state() {
+
+        testObject.Reject(new Exception());
+
+        testObject.Resolve(1);
+
+        assertEquals(State.Rejected, testObject.State);
+    }
+
+    //  2.1.3.2
+    @Test
+    public void When_rejected_a_promise_must_have_a_reason_which_must_not_change() {
+
+        Exception testException = new Exception();
+
+        testObject.Reject(testException);
+
+        testObject.Resolve(1);
+
+        assertEquals(testException, testObject.Reason);
+    }
 }

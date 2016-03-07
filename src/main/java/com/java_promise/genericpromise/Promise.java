@@ -17,6 +17,11 @@ public class Promise<TypeT> {
     //
     public TypeT Result;
 
+    //
+    //  The reason for a failure.
+    //
+    public Exception Reason;
+
     public Promise() {
 
         State = State.Pending;
@@ -48,5 +53,7 @@ public class Promise<TypeT> {
         }
 
         State = State.Rejected;
+
+        Reason = e;
     }
 }
