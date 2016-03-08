@@ -35,9 +35,8 @@ public class Promise {
 
         this();
 
-        if (onFulfilled != null) {
-            resolveCallback = onFulfilled;
-        }
+        resolveCallback = onFulfilled;
+        rejectCallback = onRejected;
     }
 
     /**
@@ -64,6 +63,10 @@ public class Promise {
 
         if (State != State.Pending) {
             return;
+        }
+
+        if (rejectCallback != null) {
+            rejectCallback.onRejected(ex);
         }
 
         State = State.Rejected;

@@ -86,8 +86,57 @@ public class Promise_Spec_2_2_Test {
     //  2.2.3
     //  If onRejected is a function,
     //  2.2.3.1 it must be called after promise is rejected, with promise’s reason as its first argument.
+    @Test
+    public void onRejected_must_be_called_after_promise_is_rejected_with_reason() {
+
+        final Exception expectedException = new Exception("foo");
+
+        testObject = new Promise(null, new RejectCallback() {
+            @Override
+            public void onRejected(Exception ex) {
+                assertEquals(expectedException, ex);
+                calls++;
+            }
+        });
+
+        testObject.Reject(expectedException);
+
+        assertEquals(1, calls);
+    }
+
     //  2.2.3.2 it must not be called before promise is rejected.
+    @Test
+    public void onRejected_must_not_be_called_before_promise_is_rejected() {
+
+        testObject = new Promise(null, new RejectCallback() {
+            @Override
+            public void onRejected(Exception ex) {
+                calls++;
+            }
+        });
+
+        assertEquals(0, calls);
+    }
+
     //  2.2.3.3 it must not be called more than once.
+    @Test
+    public void onRejected_must_not_be_called_more_than_once() {
+
+        final Exception expectedException = new Exception("foo");
+
+        testObject = new Promise(null, new RejectCallback() {
+            @Override
+            public void onRejected(Exception ex) {
+                assertEquals(expectedException, ex);
+                calls++;
+            }
+        });
+
+        testObject.Reject(expectedException);
+        testObject.Reject(expectedException);
+
+        assertEquals(1, calls);
+    }
 
     //  2.2.4
     //  onFulfilled or onRejected must not be called until the execution context stack contains only platform code. [3.1].
