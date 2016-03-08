@@ -7,5 +7,5 @@ public interface ResolveCallback {
     /**
      * Invoked when the promise is resolved.
      */
-    void onResolve();
+    void onResolved();
 }
