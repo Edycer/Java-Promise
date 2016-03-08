@@ -1,7 +1,11 @@
 package com.java_promise.tests.promise;
 
-import com.java_promise.genericpromise.Promise;
+import com.java_promise.promise.Promise;
+import com.java_promise.promise.RejectCallback;
+import com.java_promise.promise.ResolveCallback;
+import static org.junit.Assert.*;
 import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Created by Philip on 25/02/2016.
@@ -10,10 +14,14 @@ public class Promise_Spec_2_2_Test {
 
     private Promise testObject;
 
+    private int calls = 0;
+
     @Before
     public void Init() {
 
-        testObject = new Promise();
+        testObject = null;
+
+        calls = 0;
     }
 
     //  promise.then(onFulfilled, onRejected)
@@ -26,8 +34,54 @@ public class Promise_Spec_2_2_Test {
     //  2.2.2
     //  If onFulfilled is a function:
     //  2.2.2.1 it must be called after promise is fulfilled, with promise’s value as its first argument.
+    @Test
+    public void onResolve_must_be_called_after_promise_is_fulfilled() {
+
+        testObject = new Promise(new ResolveCallback() {
+            @Override
+            public void onResolved() {
+                calls++;
+            }
+        }, null);
+
+        testObject.Resolve();
+
+        assertEquals(1, calls);
+    }
+
     //  2.2.2.2 it must not be called before promise is fulfilled.
+    @Test
+    public void onResolve_must_not_be_called_before_promise_is_fulfilled() {
+
+        testObject = new Promise(new ResolveCallback() {
+            @Override
+            public void onResolved() {
+                calls++;
+            }
+        }, null);
+
+        assertEquals(0, calls);
+
+        testObject.Resolve();
+    }
+
     //  2.2.2.3 it must not be called more than once.
+    @Test
+    public void onResolve_must_not_be_called_more_than_once() {
+
+        testObject = new Promise(new ResolveCallback() {
+            @Override
+            public void onResolved() {
+                calls++;
+            }
+        }, null);
+
+        testObject.Resolve();
+
+        testObject.Resolve();
+
+        assertEquals(1, calls);
+    }
 
     //  2.2.3
     //  If onRejected is a function,

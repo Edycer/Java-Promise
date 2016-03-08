@@ -17,6 +17,10 @@ public class Promise {
      */
     public Exception Reason;
 
+    private ResolveCallback resolveCallback;
+
+    private RejectCallback rejectCallback;
+
     public Promise() {
 
         State = State.Pending;
@@ -29,6 +33,11 @@ public class Promise {
      */
     public Promise(ResolveCallback onFulfilled, RejectCallback onRejected) {
 
+        this();
+
+        if (onFulfilled != null) {
+            resolveCallback = onFulfilled;
+        }
     }
 
     /**
@@ -38,6 +47,10 @@ public class Promise {
 
         if (State != State.Pending) {
             return;
+        }
+
+        if (resolveCallback != null) {
+            resolveCallback.onResolved();
         }
 
         State = State.Resolved;
