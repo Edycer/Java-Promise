@@ -16,7 +16,7 @@ public class Generic_Promise_Spec_2_3_Test {
         testObject = new Promise();
     }
 
-//  To run [[Resolve]](promise, x), perform the following steps:
+//  To run [[resolve]](promise, x), perform the following steps:
 
 //  2.3.1 If promise and x refer to the same object, reject promise with a TypeError as the reason.
 
@@ -31,7 +31,7 @@ public class Generic_Promise_Spec_2_3_Test {
 //  2.3.3.1 Let then be x.then. [3.5]
 //  2.3.3.2 If retrieving the property x.then results in a thrown exception e, reject promise with e as the reason.
 //  2.3.3.3 If then is a function, call it with x as this, first argument resolvePromise, and second argument rejectPromise, where:
-//  2.3.3.3.1 If/when resolvePromise is called with a value y, run [[Resolve]](promise, y).
+//  2.3.3.3.1 If/when resolvePromise is called with a value y, run [[resolve]](promise, y).
 //  2.3.3.3.2 If/when rejectPromise is called with a reason r, reject promise with r.
 //  2.3.3.3.3 If both resolvePromise and rejectPromise are called, or multiple calls to the same argument are made, the first call takes precedence, and any further calls are ignored.
 //  2.3.3.3.4 If calling then throws an exception e,

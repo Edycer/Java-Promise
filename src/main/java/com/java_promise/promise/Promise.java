@@ -1,5 +1,6 @@
 package com.java_promise.promise;
 
+import com.java_promise.common.RejectCallback;
 import com.java_promise.common.State;
 
 /**

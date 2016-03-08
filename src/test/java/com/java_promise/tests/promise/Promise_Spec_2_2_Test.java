@@ -1,7 +1,7 @@
 package com.java_promise.tests.promise;
 
 import com.java_promise.promise.Promise;
-import com.java_promise.promise.RejectCallback;
+import com.java_promise.common.RejectCallback;
 import com.java_promise.promise.ResolveCallback;
 import static org.junit.Assert.*;
 import org.junit.Before;
@@ -152,7 +152,7 @@ public class Promise_Spec_2_2_Test {
     //  2.2.7
     //  then must return a promise [3.3].
     //  promise2 = promise1.then(onFulfilled, onRejected);
-    //  2.2.7.1 If either onFulfilled or onRejected returns a value x, run the Promise Resolution Procedure [[Resolve]](promise2, x).
+    //  2.2.7.1 If either onFulfilled or onRejected returns a value x, run the Promise Resolution Procedure [[resolve]](promise2, x).
     //  2.2.7.2 If either onFulfilled or onRejected throws an exception e, promise2 must be rejected with e as the reason.
     //  2.2.7.3 If onFulfilled is not a function and promise1 is fulfilled, promise2 must be fulfilled with the same value as promise1.
     //  2.2.7.4 If onRejected is not a function and promise1 is rejected, promise2 must be rejected with the same reason as promise1.
