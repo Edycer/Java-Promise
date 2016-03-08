@@ -42,7 +42,7 @@ public class Promise {
     /**
      * Sets the promise to resolved and actions registered thenables.
      */
-    public void Resolve() {
+    public void resolve() {
 
         if (State != State.Pending) {
             return;
@@ -59,7 +59,7 @@ public class Promise {
      * Sets the promise to rejected and actions registered catchers.
      * @param ex Exception to be passed to catchers.
      */
-    public void Reject(Exception ex) {
+    public void reject(Exception ex) {
 
         if (State != State.Pending) {
             return;

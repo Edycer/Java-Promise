@@ -25,7 +25,7 @@ public class Promise_Spec_2_1_Test {
     @Test
     public void When_pending_a_promise_may_transition_to_the_fulfilled_state() {
 
-        testObject.Reject(new Exception());
+        testObject.reject(new Exception());
 
         assertEquals(State.Rejected, testObject.State);
     }
@@ -34,9 +34,9 @@ public class Promise_Spec_2_1_Test {
     @Test
     public void When_fulfilled_a_promise_must_not_transition_to_any_other_state() {
 
-        testObject.Resolve();
+        testObject.resolve();
 
-        testObject.Reject(new Exception());
+        testObject.reject(new Exception());
 
         assertEquals(State.Resolved, testObject.State);
     }
@@ -49,9 +49,9 @@ public class Promise_Spec_2_1_Test {
     @Test
     public void When_rejected_a_promise_must_not_transition_to_any_other_state() {
 
-        testObject.Reject(new Exception());
+        testObject.reject(new Exception());
 
-        testObject.Resolve();
+        testObject.resolve();
 
         assertEquals(State.Rejected, testObject.State);
     }
@@ -62,9 +62,9 @@ public class Promise_Spec_2_1_Test {
 
         Exception testException = new Exception();
 
-        testObject.Reject(testException);
+        testObject.reject(testException);
 
-        testObject.Resolve();
+        testObject.resolve();
 
         assertEquals(testException, testObject.Reason);
     }
