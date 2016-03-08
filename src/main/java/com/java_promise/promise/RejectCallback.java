@@ -8,5 +8,5 @@ public interface RejectCallback {
      * Invoked when the promise is rejected.
      * @param ex Reason for rejection.
      */
-    void onReject(Exception ex);
+    void onRejected(Exception ex);
 }
