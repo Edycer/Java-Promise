@@ -19,7 +19,7 @@ public class Promise_Spec_2_2_Test {
     @Before
     public void Init() {
 
-        testObject = null;
+        testObject = new Promise();
 
         calls = 0;
     }
@@ -37,7 +37,7 @@ public class Promise_Spec_2_2_Test {
     @Test
     public void onResolve_must_be_called_after_promise_is_fulfilled() {
 
-        testObject = new Promise(new ResolveCallback() {
+        testObject.then(new ResolveCallback() {
             @Override
             public void onResolved() {
                 calls++;
@@ -53,7 +53,7 @@ public class Promise_Spec_2_2_Test {
     @Test
     public void onResolve_must_not_be_called_before_promise_is_fulfilled() {
 
-        testObject = new Promise(new ResolveCallback() {
+        testObject.then(new ResolveCallback() {
             @Override
             public void onResolved() {
                 calls++;
@@ -69,7 +69,7 @@ public class Promise_Spec_2_2_Test {
     @Test
     public void onResolve_must_not_be_called_more_than_once() {
 
-        testObject = new Promise(new ResolveCallback() {
+        testObject.then(new ResolveCallback() {
             @Override
             public void onResolved() {
                 calls++;
@@ -91,7 +91,7 @@ public class Promise_Spec_2_2_Test {
 
         final Exception expectedException = new Exception("foo");
 
-        testObject = new Promise(null, new RejectCallback() {
+        testObject.then(null, new RejectCallback() {
             @Override
             public void onRejected(Exception ex) {
                 assertEquals(expectedException, ex);
@@ -108,7 +108,7 @@ public class Promise_Spec_2_2_Test {
     @Test
     public void onRejected_must_not_be_called_before_promise_is_rejected() {
 
-        testObject = new Promise(null, new RejectCallback() {
+        testObject.then(null, new RejectCallback() {
             @Override
             public void onRejected(Exception ex) {
                 calls++;
@@ -124,7 +124,7 @@ public class Promise_Spec_2_2_Test {
 
         final Exception expectedException = new Exception("foo");
 
-        testObject = new Promise(null, new RejectCallback() {
+        testObject.then(null, new RejectCallback() {
             @Override
             public void onRejected(Exception ex) {
                 assertEquals(expectedException, ex);

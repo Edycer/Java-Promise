@@ -30,28 +30,6 @@ public class Promise {
     }
 
     /**
-     * Create a new promise with a callback to be triggered when it is resolved.
-     * @param onFulfilled Callback triggered when the promise is resolved. Can be null.
-     */
-    public Promise(ResolveCallback onFulfilled) {
-
-        this(onFulfilled, null);
-    }
-
-    /**
-     * Create a new promise with a specified callback for when it is resolved and rejected.
-     * @param onFulfilled Callback triggered when the promise is resolved. Can be null.
-     * @param onRejected Callback triggered when the promise is rejected. Can be null.
-     */
-    public Promise(ResolveCallback onFulfilled, RejectCallback onRejected) {
-
-        this();
-
-        resolveCallback = onFulfilled;
-        rejectCallback = onRejected;
-    }
-
-    /**
      * Sets the promise to resolved and actions registered thenables.
      */
     public void resolve() {
@@ -91,6 +69,11 @@ public class Promise {
      * @param onResolved
      */
     public void then(ResolveCallback onResolved) {
-        // TODO: Write method
+        then(onResolved, null);
+    }
+
+    public void then(ResolveCallback onResolved, RejectCallback onRejected) {
+        resolveCallback = onResolved;
+        rejectCallback = onRejected;
     }
 }
