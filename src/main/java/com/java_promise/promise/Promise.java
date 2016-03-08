@@ -21,15 +21,27 @@ public class Promise {
 
     private RejectCallback rejectCallback;
 
+    /**
+     * Create a new promise without any resolved or rejected callbacks.
+     */
     public Promise() {
 
         State = State.Pending;
     }
 
     /**
-     *
-     * @param onFulfilled
-     * @param onRejected
+     * Create a new promise with a callback to be triggered when it is resolved.
+     * @param onFulfilled Callback triggered when the promise is resolved. Can be null.
+     */
+    public Promise(ResolveCallback onFulfilled) {
+
+        this(onFulfilled, null);
+    }
+
+    /**
+     * Create a new promise with a specified callback for when it is resolved and rejected.
+     * @param onFulfilled Callback triggered when the promise is resolved. Can be null.
+     * @param onRejected Callback triggered when the promise is rejected. Can be null.
      */
     public Promise(ResolveCallback onFulfilled, RejectCallback onRejected) {
 
@@ -72,5 +84,13 @@ public class Promise {
         State = State.Rejected;
 
         Reason = ex;
+    }
+
+    /**
+     * Add an on resolved callback.
+     * @param onResolved
+     */
+    public void then(ResolveCallback onResolved) {
+        // TODO: Write method
     }
 }
