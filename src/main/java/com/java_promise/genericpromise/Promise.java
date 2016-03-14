@@ -1,6 +1,11 @@
 package com.java_promise.genericpromise;
 
+import com.java_promise.common.RejectCallback;
 import com.java_promise.common.State;
+
+import java.util.Iterator;
+import java.util.List;
+import java.util.ArrayList;
 
 /**
  * Created by Philip on 2/03/2016.
@@ -22,6 +27,16 @@ public class Promise<TypeT> {
     //
     public Exception Reason;
 
+    //
+    //  Called when the promise is resolved.
+    //
+    private List<ResolveCallback<TypeT>> resolveCallbacks = new ArrayList<ResolveCallback<TypeT>>();
+
+    //
+    //  Called when the promise is rejected.
+    //
+    private List<RejectCallback> rejectCallbacks = new ArrayList<RejectCallback>();
+
     public Promise() {
 
         State = State.Pending;
@@ -30,7 +45,7 @@ public class Promise<TypeT> {
     //
     //  Sets the promise to resolved and actions registered thenables.
     //
-    public void Resolve(TypeT result) {
+    public void resolve(TypeT result) {
 
         if (State != State.Pending) {
 
@@ -40,12 +55,20 @@ public class Promise<TypeT> {
         State = State.Resolved;
 
         Result = result;
+
+        if (resolveCallbacks.size() > 0) {
+
+            for (ResolveCallback callback : resolveCallbacks) {
+
+                callback.onResolved(Result);
+            }
+        }
     }
 
     //
     //  Sets the promise to rejected and actions registered catchers.
     //
-    public void Reject(Exception e) {
+    public void reject(Exception e) {
 
         if (State != State.Pending) {
 
@@ -56,4 +79,32 @@ public class Promise<TypeT> {
 
         Reason = e;
     }
+
+    //
+    //  Registers a thenable and catcher.
+    //
+    public void then(ResolveCallback<TypeT> resolveCallback, RejectCallback rejectCallback) {
+
+        if (resolveCallback != null) {
+
+            resolveCallbacks.add(resolveCallback);
+        }
+
+        if (rejectCallback != null) {
+
+            rejectCallbacks.add(rejectCallback);
+        }
+    }
+
+    //
+    //  Registers a thenable with the promise.
+    //
+    public void then(ResolveCallback<TypeT> resolveCallback) {
+
+        if (resolveCallback != null) {
+
+            resolveCallbacks.add(resolveCallback);
+        }
+    }
+
 }

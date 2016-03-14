@@ -1,4 +1,4 @@
-package com.java_promise.promise;
+package com.java_promise.common;
 
 /**
  * Created by rory on 8/03/16.

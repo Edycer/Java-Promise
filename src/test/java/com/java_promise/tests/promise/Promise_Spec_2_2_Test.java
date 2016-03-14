@@ -1,7 +1,7 @@
 package com.java_promise.tests.promise;
 
 import com.java_promise.promise.Promise;
-import com.java_promise.promise.RejectCallback;
+import com.java_promise.common.RejectCallback;
 import com.java_promise.promise.ResolveCallback;
 import static org.junit.Assert.*;
 import org.junit.Before;
