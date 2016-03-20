@@ -12,39 +12,40 @@ import java.util.ArrayList;
  */
 public class Promise<TypeT> {
 
-    //
-    //  The current state of the promise.
-    //
+    /**
+     * The current state of the promise.
+     */
     public State State;
 
-    //
-    //  The result of the promise.
-    //
+    /**
+     * The result of the promise.
+     */
     public TypeT Result;
 
-    //
-    //  The reason for a failure.
-    //
+    /**
+     * The reason for a failure.
+     */
     public Exception Reason;
 
-    //
-    //  Called when the promise is resolved.
-    //
-    private List<ResolveCallback<TypeT>> resolveCallbacks = new ArrayList<ResolveCallback<TypeT>>();
+    /**
+     * Called when the promise is resolved.
+     */
+    private List<ResolveCallback<TypeT>> resolveCallbacks = new ArrayList<>();
 
-    //
-    //  Called when the promise is rejected.
-    //
-    private List<RejectCallback> rejectCallbacks = new ArrayList<RejectCallback>();
+    /**
+     * Called when the promise is rejected.
+     */
+    private List<RejectCallback> rejectCallbacks = new ArrayList<>();
 
     public Promise() {
 
         State = State.Pending;
     }
 
-    //
-    //  Sets the promise to resolved and actions registered thenables.
-    //
+    /**
+     * Sets the promise to resolved and actions registered thenables.
+     * @param result
+     */
     public void resolve(TypeT result) {
 
         if (State != State.Pending) {
@@ -65,10 +66,11 @@ public class Promise<TypeT> {
         }
     }
 
-    //
-    //  Sets the promise to rejected and actions registered catchers.
-    //
-    public void reject(Exception e) {
+    /**
+     * Sets the promise to rejected and actions registered catchers.
+     * @param exception
+     */
+    public void reject(Exception exception) {
 
         if (State != State.Pending) {
 
@@ -77,12 +79,14 @@ public class Promise<TypeT> {
 
         State = State.Rejected;
 
-        Reason = e;
+        Reason = exception;
     }
 
-    //
-    //  Registers a thenable and catcher.
-    //
+    /**
+     * Registers a thenable and catcher.
+     * @param resolveCallback
+     * @param rejectCallback
+     */
     public void then(ResolveCallback<TypeT> resolveCallback, RejectCallback rejectCallback) {
 
         if (resolveCallback != null) {
@@ -96,9 +100,10 @@ public class Promise<TypeT> {
         }
     }
 
-    //
-    //  Registers a thenable with the promise.
-    //
+    /**
+     * Registers a thenable with the promise.
+     * @param resolveCallback
+     */
     public void then(ResolveCallback<TypeT> resolveCallback) {
 
         if (resolveCallback != null) {
@@ -106,5 +111,4 @@ public class Promise<TypeT> {
             resolveCallbacks.add(resolveCallback);
         }
     }
-
 }
