@@ -3,7 +3,6 @@ package com.java_promise.genericpromise;
 import com.java_promise.common.RejectCallback;
 import com.java_promise.common.State;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -59,7 +58,7 @@ public class Promise<TypeT> {
 
         if (resolveCallbacks.size() > 0) {
 
-            for (ResolveCallback callback : resolveCallbacks) {
+            for (ResolveCallback<TypeT> callback : resolveCallbacks) {
 
                 callback.onResolved(Result);
             }

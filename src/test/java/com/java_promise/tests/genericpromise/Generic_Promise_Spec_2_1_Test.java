@@ -12,12 +12,12 @@ import org.junit.Test;
  */
 public class Generic_Promise_Spec_2_1_Test {
 
-    private Promise testObject;
+    private Promise<Integer> testObject;
 
     @Before
     public void Init() {
 
-        testObject = new Promise<Integer>();
+        testObject = new Promise<>();
     }
 
     //
@@ -65,7 +65,7 @@ public class Generic_Promise_Spec_2_1_Test {
 
         testObject.resolve(5);
 
-        assertEquals(1, testObject.Result);
+        assertEquals(1, testObject.Result.intValue());
     }
 
     //

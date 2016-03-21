@@ -15,7 +15,7 @@ import java.util.ArrayList;
  */
 public class Generic_Promise_Spec_2_2_Test {
 
-    private Promise testObject;
+    private Promise<Integer> testObject;
 
     @Before
     public void Init() {
@@ -129,7 +129,7 @@ public class Generic_Promise_Spec_2_2_Test {
                 promiseResults.add(result);
             }
         });
-        
+
         testObject.resolve(1);
         testObject.resolve(2);
 
