@@ -20,11 +20,13 @@ public class Generic_Promise_Spec_2_1_Test {
         testObject = new Promise<>();
     }
 
-    //
-    //  2.1.1
-    //
+    /*
+     * 2.1.1
+     */
 
-    //  2.1.1.1
+    /*
+     * 2.1.1.1
+     */
     @Test
     public void When_pending_a_promise_may_transition_to_the_fulfilled_state() {
 
@@ -33,7 +35,9 @@ public class Generic_Promise_Spec_2_1_Test {
         assertEquals(State.Resolved, testObject.State);
     }
 
-    //  2.1.1.2
+    /*
+     * 2.1.1.2
+     */
     @Test
     public void When_pending_a_promise_may_transition_to_the_rejected_state() {
 
@@ -42,11 +46,13 @@ public class Generic_Promise_Spec_2_1_Test {
         assertEquals(State.Rejected, testObject.State);
     }
 
-    //
-    //  2.1.2
-    //
+    /*
+     * 2.1.2
+     */
 
-    //  2.1.2.1
+    /*
+     * 2.1.2.1
+     */
     @Test
     public void When_fulfilled_a_promise_must_not_transition_to_any_other_state() {
 
@@ -57,7 +63,9 @@ public class Generic_Promise_Spec_2_1_Test {
         assertEquals(State.Resolved, testObject.State);
     }
 
-    //  2.1.2.2
+    /*
+     * 2.1.2.2
+     */
     @Test
     public void When_fulfilled_a_promise_must_have_a_value_which_must_not_change() {
 
@@ -68,11 +76,13 @@ public class Generic_Promise_Spec_2_1_Test {
         assertEquals(1, testObject.Result.intValue());
     }
 
-    //
-    //  2.1.3
-    //
+    /*
+     * 2.1.3
+     */
 
-    //  2.1.3.1
+    /*
+     * 2.1.3.1
+     */
     @Test
     public void When_rejected_a_promise_must_not_transition_to_any_other_state() {
 
@@ -83,7 +93,9 @@ public class Generic_Promise_Spec_2_1_Test {
         assertEquals(State.Rejected, testObject.State);
     }
 
-    //  2.1.3.2
+    /*
+     * 2.1.3.2
+     */
     @Test
     public void When_rejected_a_promise_must_have_a_reason_which_must_not_change() {
 
