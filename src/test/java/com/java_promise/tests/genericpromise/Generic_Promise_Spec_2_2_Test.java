@@ -20,21 +20,23 @@ public class Generic_Promise_Spec_2_2_Test {
     @Before
     public void Init() {
 
-        testObject = new Promise<Integer>();
+        testObject = new Promise<>();
     }
 
-    //  promise.then(onFulfilled, onRejected)
+    /*
+     * promise.then(onFulfilled, onRejected)
+     *
+     * 2.2.1
+     * Both onFulfilled and onRejected are optional arguments:
+     */
 
-    //
-    //  2.2.1
-    //  Both onFulfilled and onRejected are optional arguments:
-    //
-    
-    //  2.2.1.1
+    /*
+     * 2.2.1.1
+     */
     @Test
-    public void If_onFulfilled_is_not_a_function_it_must_be_ignored() {
+    public void if_onFulfilled_is_not_a_function_it_must_be_ignored() {
 
-        final List<Integer> promiseResults = new ArrayList<Integer>();
+        final List<Integer> promiseResults = new ArrayList<>();
 
         testObject.then(null, new RejectCallback() {
 
@@ -59,16 +61,18 @@ public class Generic_Promise_Spec_2_2_Test {
 
     //  2.2.1.2 If onRejected is not a function, it must be ignored.
 
-    //
-    //  2.2.2
-    //  If onFulfilled is a function:
-    //
+    /*
+     * 2.2.2
+     * If onFulfilled is a function:
+     */
     
-    //  2.2.2.1
+    /*
+     * 2.2.2.1
+     */
     @Test
     public void it_must_be_called_after_promise_is_fulfilled_with_promises_value_as_its_first_argument() {
 
-        final List<Integer> promiseResults = new ArrayList<Integer>();
+        final List<Integer> promiseResults = new ArrayList<>();
 
         testObject.then(new ResolveCallback<Integer>() {
 
@@ -82,12 +86,55 @@ public class Generic_Promise_Spec_2_2_Test {
         testObject.resolve(1);
 
         assertEquals(1, promiseResults.size());
-        assertEquals(1, (int)promiseResults.get(0));
+        assertEquals(1, promiseResults.get(0).intValue());
     }
 
-    //  2.2.2.2 it must not be called before promise is fulfilled.
+    /*
+     * 2.2.2.2
+     */
+    @Test
+    public void it_must_not_be_called_before_promise_is_fulfilled() {
+
+        final List<Integer> promiseResults = new ArrayList<>();
+
+        testObject.then(new ResolveCallback<Integer>() {
+
+            @Override
+            public void onResolved(Integer result) {
+
+                promiseResults.add(result);
+            }
+        });
+
+        assertEquals(0, promiseResults.size());
+
+        testObject.resolve(1);
+
+        assertEquals(1, promiseResults.size());
+    }
     
-    //  2.2.2.3 it must not be called more than once.
+    /*
+     * 2.2.2.3
+     */
+    @Test
+    public void it_must_not_be_called_more_than_once() {
+
+        final List<Integer> promiseResults = new ArrayList<>();
+
+        testObject.then(new ResolveCallback<Integer>() {
+
+            @Override
+            public void onResolved(Integer result) {
+
+                promiseResults.add(result);
+            }
+        });
+        
+        testObject.resolve(1);
+        testObject.resolve(2);
+
+        assertEquals(1, promiseResults.size());
+    }
 
     //  2.2.3
     //  If onRejected is a function,
