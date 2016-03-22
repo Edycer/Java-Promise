@@ -79,6 +79,14 @@ public class Promise<TypeT> {
         State = State.Rejected;
 
         Reason = exception;
+
+        if (rejectCallbacks.size() > 0) {
+
+            for (RejectCallback callback : rejectCallbacks) {
+
+                callback.onRejected(Reason);
+            }
+        }
     }
 
     /**
@@ -108,6 +116,18 @@ public class Promise<TypeT> {
         if (resolveCallback != null) {
 
             resolveCallbacks.add(resolveCallback);
+        }
+    }
+
+    /**
+     * Registers a catcher with the promise.
+     * @param rejectCallback
+     */
+    public void handle(RejectCallback rejectCallback) {
+
+        if (rejectCallback != null) {
+
+            rejectCallbacks.add(rejectCallback);
         }
     }
 }

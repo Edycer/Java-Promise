@@ -59,10 +59,39 @@ public class Generic_Promise_Spec_2_2_Test {
         assertEquals(1, promiseResults.size());
     }
 
-    //  2.2.1.2 If onRejected is not a function, it must be ignored.
+    /*
+     * 2.2.1.2
+     */
+    @Test
+    public void if_onRejected_is_not_a_function_it_must_be_ignored() {
+
+        final List<Exception> promiseExceptions = new ArrayList<>();
+
+        testObject.then(new ResolveCallback<Integer>() {
+
+            @Override
+            public void onResolved(Integer result) {
+
+            }
+        }, null);
+
+        testObject.handle(new RejectCallback() {
+
+            @Override
+            public void onRejected(Exception ex) {
+
+                promiseExceptions.add(ex);
+            }
+        });
+
+        testObject.reject(new Exception("Test"));
+
+        assertEquals(1, promiseExceptions.size());
+    }
 
     /*
      * 2.2.2
+     *
      * If onFulfilled is a function:
      */
     
@@ -136,9 +165,22 @@ public class Generic_Promise_Spec_2_2_Test {
         assertEquals(1, promiseResults.size());
     }
 
-    //  2.2.3
-    //  If onRejected is a function,
-    //  2.2.3.1 it must be called after promise is rejected, with promise’s reason as its first argument.
+    /*
+     * 2.2.3
+     *
+     * If onRejected is a function,
+     */
+
+    /*
+     * 2.2.3.1
+     */
+    @Test
+    public void it_must_be_called_after_promise_is_rejected_with_promises_reason_as_its_first_argument() {
+        
+//        final List<Exception> promiseRejections = new ArrayList<>();
+//
+//        testObject.cat
+    }
     //  2.2.3.2 it must not be called before promise is rejected.
     //  2.2.3.3 it must not be called more than once.
 
