@@ -99,7 +99,7 @@ public class Generic_Promise_Spec_2_2_Test {
      * 2.2.2.1
      */
     @Test
-    public void it_must_be_called_after_promise_is_fulfilled_with_promises_value_as_its_first_argument() {
+    public void onFulfilled_must_be_called_after_promise_is_fulfilled_with_promises_value_as_its_first_argument() {
 
         final List<Integer> promiseResults = new ArrayList<>();
 
@@ -122,7 +122,7 @@ public class Generic_Promise_Spec_2_2_Test {
      * 2.2.2.2
      */
     @Test
-    public void it_must_not_be_called_before_promise_is_fulfilled() {
+    public void onFulfilled_must_not_be_called_before_promise_is_fulfilled() {
 
         final List<Integer> promiseResults = new ArrayList<>();
 
@@ -146,7 +146,7 @@ public class Generic_Promise_Spec_2_2_Test {
      * 2.2.2.3
      */
     @Test
-    public void it_must_not_be_called_more_than_once() {
+    public void onFulfilled_must_not_be_called_more_than_once() {
 
         final List<Integer> promiseResults = new ArrayList<>();
 
@@ -175,7 +175,7 @@ public class Generic_Promise_Spec_2_2_Test {
      * 2.2.3.1
      */
     @Test
-    public void it_must_be_called_after_promise_is_rejected_with_promises_reason_as_its_first_argument() {
+    public void onRejected_must_be_called_after_promise_is_rejected_with_promises_reason_as_its_first_argument() {
         
         final List<Exception> promiseRejections = new ArrayList<>();
         Exception testException = new Exception("Test Exception");
@@ -189,16 +189,58 @@ public class Generic_Promise_Spec_2_2_Test {
             }
         });
 
-        assertEquals(0, promiseRejections.size());
-
         testObject.reject(testException);
 
         assertEquals(1, promiseRejections.size());
         assertEquals(testException, promiseRejections.get(0));
     }
     
-    //  2.2.3.2 it must not be called before promise is rejected.
-    //  2.2.3.3 it must not be called more than once.
+    /*
+     * 2.2.3.2 
+     */
+    @Test
+    public void onRejected_must_not_be_called_before_promise_is_rejected() {
+
+        final List<Exception> promiseRejections = new ArrayList<>();
+
+        testObject.handle(new RejectCallback() {
+
+            @Override
+            public void onRejected(Exception ex) {
+
+                promiseRejections.add(ex);
+            }
+        });
+
+        assertEquals(0, promiseRejections.size());
+
+        testObject.reject(new Exception("Test Exception"));
+
+        assertEquals(1, promiseRejections.size());
+    }
+    
+    /*
+     * 2.2.3.3 
+     */
+    @Test
+    public void onRejected_must_not_be_called_more_than_once() {
+
+        final List<Exception> promiseRejections = new ArrayList<>();
+
+        testObject.handle(new RejectCallback() {
+
+            @Override
+            public void onRejected(Exception ex) {
+
+                promiseRejections.add(ex);
+            }
+        });
+
+        testObject.reject(new Exception("Test Exception 1"));
+        testObject.reject(new Exception("Test Exception 2"));
+
+        assertEquals(1, promiseRejections.size());
+    }
 
     //  2.2.4
     //  onFulfilled or onRejected must not be called until the execution context stack contains only platform code. [3.1].
