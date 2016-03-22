@@ -168,7 +168,7 @@ public class Generic_Promise_Spec_2_2_Test {
     /*
      * 2.2.3
      *
-     * If onRejected is a function,
+     * If onRejected is a function:
      */
 
     /*
@@ -248,9 +248,56 @@ public class Generic_Promise_Spec_2_2_Test {
     //  2.2.5
     //  onFulfilled and onRejected must be called as functions (i.e. with no this value). [3.2]
 
-    //  2.2.6
-    //  then may be called multiple times on the same promise.
-    //  2.2.6.1 If/when promise is fulfilled, all respective onFulfilled callbacks must execute in the order of their originating calls to then.
+    /*
+     * 2.2.6
+     * 
+     * Then may be called multiple times on the same promise:
+     */
+    
+    /*
+     * 2.2.6.1
+     * 
+     * If/when promise is fulfilled,
+     */
+    @Test
+    public void all_respective_onFulfilled_callbacks_must_execute_in_the_order_of_their_originating_calls_to_then() {
+
+        final List<Integer> testOrder = new ArrayList<>();
+
+        testObject.then(new ResolveCallback<Integer>() {
+
+            @Override
+            public void onResolved(Integer result) {
+
+                testOrder.add(1);
+            }
+        });
+
+        testObject.then(new ResolveCallback<Integer>() {
+
+            @Override
+            public void onResolved(Integer result) {
+
+                testOrder.add(2);
+            }
+        }, null);
+
+        testObject.then(new ResolveCallback<Integer>() {
+
+            @Override
+            public void onResolved(Integer result) {
+
+                testOrder.add(3);
+            }
+        });
+
+        testObject.resolve(1);
+
+        assertEquals(3, testOrder.size());
+        assertEquals(1, testOrder.get(0).intValue());
+        assertEquals(2, testOrder.get(1).intValue());
+        assertEquals(3, testOrder.get(2).intValue());
+    }
     //  2.2.6.2 If/when promise is rejected, all respective onRejected callbacks must execute in the order of their originating calls to then.
 
     //  2.2.7
