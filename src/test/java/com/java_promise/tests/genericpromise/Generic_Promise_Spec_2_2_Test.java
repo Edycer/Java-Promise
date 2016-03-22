@@ -298,7 +298,49 @@ public class Generic_Promise_Spec_2_2_Test {
         assertEquals(2, testOrder.get(1).intValue());
         assertEquals(3, testOrder.get(2).intValue());
     }
-    //  2.2.6.2 If/when promise is rejected, all respective onRejected callbacks must execute in the order of their originating calls to then.
+    /*
+     * 2.2.6.2 
+     * 
+     * If/when promise is rejected 
+     */
+    @Test
+    public void all_respective_onRejected_callbacks_must_execute_in_the_order_of_their_originating_calls_to_then() {
+
+        final List<Integer> testOrder = new ArrayList<>();
+
+        testObject.handle(new RejectCallback() {
+
+            @Override
+            public void onRejected(Exception ex) {
+
+                testOrder.add(1);
+            }
+        });
+
+        testObject.then(null, new RejectCallback() {
+
+            @Override
+            public void onRejected(Exception ex) {
+
+                testOrder.add(2);
+            }
+        });
+
+        testObject.handle(new RejectCallback() {
+
+            @Override
+            public void onRejected(Exception ex) {
+
+                testOrder.add(3);
+            }
+        });
+
+        testObject.reject(new Exception("Test Exception"));
+
+        assertEquals(1, testOrder.get(0).intValue());
+        assertEquals(2, testOrder.get(1).intValue());
+        assertEquals(3, testOrder.get(2).intValue());
+    }
 
     //  2.2.7
     //  then must return a promise [3.3].
