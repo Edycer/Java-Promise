@@ -177,10 +177,26 @@ public class Generic_Promise_Spec_2_2_Test {
     @Test
     public void it_must_be_called_after_promise_is_rejected_with_promises_reason_as_its_first_argument() {
         
-//        final List<Exception> promiseRejections = new ArrayList<>();
-//
-//        testObject.cat
+        final List<Exception> promiseRejections = new ArrayList<>();
+        Exception testException = new Exception("Test Exception");
+
+        testObject.handle(new RejectCallback() {
+
+            @Override
+            public void onRejected(Exception ex) {
+
+                promiseRejections.add(ex);
+            }
+        });
+
+        assertEquals(0, promiseRejections.size());
+
+        testObject.reject(testException);
+
+        assertEquals(1, promiseRejections.size());
+        assertEquals(testException, promiseRejections.get(0));
     }
+    
     //  2.2.3.2 it must not be called before promise is rejected.
     //  2.2.3.3 it must not be called more than once.
 
