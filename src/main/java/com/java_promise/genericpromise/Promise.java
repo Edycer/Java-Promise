@@ -2,6 +2,8 @@ package com.java_promise.genericpromise;
 
 import com.java_promise.common.RejectCallback;
 import com.java_promise.common.State;
+import com.java_promise.common.ActionablePromise;
+import com.java_promise.common.Tuple;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -9,7 +11,8 @@ import java.util.ArrayList;
 /**
  * Created by Philip on 2/03/2016.
  */
-public class Promise<TypeT> {
+public class Promise<TypeT>
+        implements ActionablePromise<TypeT> {
 
     /**
      * The current state of the promise.
@@ -29,7 +32,7 @@ public class Promise<TypeT> {
     /**
      * Called when the promise is resolved.
      */
-    private List<ResolveCallback<TypeT>> resolveCallbacks = new ArrayList<>();
+    private List<Tuple<ResolveCallback<TypeT>, ActionablePromise<TypeT>>> resolveCallbacks = new ArrayList<>();
 
     /**
      * Called when the promise is rejected.
@@ -58,18 +61,26 @@ public class Promise<TypeT> {
 
         if (resolveCallbacks.size() > 0) {
 
-            for (ResolveCallback<TypeT> callback : resolveCallbacks) {
+            for (Tuple<ResolveCallback<TypeT>, ActionablePromise<TypeT>> callback : resolveCallbacks) {
 
-                callback.onResolved(Result);
+                try {
+
+                    callback.A.onResolved(result);
+                    callback.B.resolve(result);
+
+                } catch (Exception ex) {
+
+                    callback.B.reject(ex);
+                }
             }
         }
     }
 
     /**
      * Sets the promise to rejected and actions registered catchers.
-     * @param exception
+     * @param ex
      */
-    public void reject(Exception exception) {
+    public void reject(Exception ex) {
 
         if (State != State.Pending) {
 
@@ -78,7 +89,7 @@ public class Promise<TypeT> {
 
         State = State.Rejected;
 
-        Reason = exception;
+        Reason = ex;
 
         if (rejectCallbacks.size() > 0) {
 
@@ -94,29 +105,30 @@ public class Promise<TypeT> {
      * @param resolveCallback
      * @param rejectCallback
      */
-    public void then(ResolveCallback<TypeT> resolveCallback, RejectCallback rejectCallback) {
+    public Promise<TypeT> then(ResolveCallback<TypeT> resolveCallback, RejectCallback rejectCallback) {
+
+        Promise<TypeT> newPromise = new Promise<>();
 
         if (resolveCallback != null) {
 
-            resolveCallbacks.add(resolveCallback);
+            resolveCallbacks.add(new Tuple<ResolveCallback<TypeT>, ActionablePromise<TypeT>>(resolveCallback, newPromise));
         }
 
         if (rejectCallback != null) {
 
             rejectCallbacks.add(rejectCallback);
         }
+
+        return newPromise;
     }
 
     /**
      * Registers a thenable with the promise.
      * @param resolveCallback
      */
-    public void then(ResolveCallback<TypeT> resolveCallback) {
+    public Promise<TypeT> then(ResolveCallback<TypeT> resolveCallback) {
 
-        if (resolveCallback != null) {
-
-            resolveCallbacks.add(resolveCallback);
-        }
+        return then(resolveCallback, null);
     }
 
     /**
@@ -125,9 +137,6 @@ public class Promise<TypeT> {
      */
     public void handle(RejectCallback rejectCallback) {
 
-        if (rejectCallback != null) {
-
-            rejectCallbacks.add(rejectCallback);
-        }
+        then(null, rejectCallback);
     }
 }

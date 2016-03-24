@@ -15,7 +15,4 @@ public class Generic_Promise_Test {
 
         testObject = new Promise();
     }
-
-
-
 }

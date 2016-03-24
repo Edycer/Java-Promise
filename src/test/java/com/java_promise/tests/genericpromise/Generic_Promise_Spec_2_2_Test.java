@@ -298,6 +298,7 @@ public class Generic_Promise_Spec_2_2_Test {
         assertEquals(2, testOrder.get(1).intValue());
         assertEquals(3, testOrder.get(2).intValue());
     }
+
     /*
      * 2.2.6.2 
      * 
@@ -342,10 +343,51 @@ public class Generic_Promise_Spec_2_2_Test {
         assertEquals(3, testOrder.get(2).intValue());
     }
 
-    //  2.2.7
-    //  then must return a promise [3.3].
-    //  promise2 = promise1.then(onFulfilled, onRejected);
-    //  2.2.7.1 If either onFulfilled or onRejected returns a value x, run the Promise Resolution Procedure [[resolve]](promise2, x).
+    /*
+     * 2.2.7
+     *
+     * then must return a promise [3.3].
+     * promise2 = promise1.then(onFulfilled, onRejected);
+     */
+    
+    /*
+     * 2.2.7.1
+     * If either onFulfilled or onRejected returns a value x, run the Promise Resolution Procedure 
+     * [[resolve]](promise2, x).
+     */
+    
+    /*
+     * 2.2.7.1.1
+     */
+    @Test
+    public void onFulfilled_returns_a_value_x_run_the_Promise_Resolution_Procedure() {
+
+        final List<Integer> promiseResults = new ArrayList<>();
+
+        Promise<Integer> promise2 = testObject.then(new ResolveCallback<Integer>() {
+
+            @Override
+            public void onResolved(Integer result) {
+
+                // No action required for test.
+            }
+        });
+
+        promise2.then(new ResolveCallback<Integer>() {
+
+            @Override
+            public void onResolved(Integer result) {
+
+                promiseResults.add(result);
+            }
+        });
+
+        testObject.resolve(5);
+
+        assertEquals(1, promiseResults.size());
+        assertEquals(5, promiseResults.get(0).intValue());
+    }
+    
     //  2.2.7.2 If either onFulfilled or onRejected throws an exception e, promise2 must be rejected with e as the reason.
     //  2.2.7.3 If onFulfilled is not a function and promise1 is fulfilled, promise2 must be fulfilled with the same value as promise1.
     //  2.2.7.4 If onRejected is not a function and promise1 is rejected, promise2 must be rejected with the same reason as promise1.
