@@ -22,28 +22,18 @@ public class Promise {
 
     private RejectCallback rejectCallback;
 
+    /**
+     * Create a new promise without any resolved or rejected callbacks.
+     */
     public Promise() {
 
         State = State.Pending;
     }
 
     /**
-     *
-     * @param onFulfilled
-     * @param onRejected
-     */
-    public Promise(ResolveCallback onFulfilled, RejectCallback onRejected) {
-
-        this();
-
-        resolveCallback = onFulfilled;
-        rejectCallback = onRejected;
-    }
-
-    /**
      * Sets the promise to resolved and actions registered thenables.
      */
-    public void Resolve() {
+    public void resolve() {
 
         if (State != State.Pending) {
             return;
@@ -60,7 +50,7 @@ public class Promise {
      * Sets the promise to rejected and actions registered catchers.
      * @param ex Exception to be passed to catchers.
      */
-    public void Reject(Exception ex) {
+    public void reject(Exception ex) {
 
         if (State != State.Pending) {
             return;
@@ -73,5 +63,18 @@ public class Promise {
         State = State.Rejected;
 
         Reason = ex;
+    }
+
+    /**
+     * Add an on resolved callback.
+     * @param onResolved
+     */
+    public void then(ResolveCallback onResolved) {
+        then(onResolved, null);
+    }
+
+    public void then(ResolveCallback onResolved, RejectCallback onRejected) {
+        resolveCallback = onResolved;
+        rejectCallback = onRejected;
     }
 }

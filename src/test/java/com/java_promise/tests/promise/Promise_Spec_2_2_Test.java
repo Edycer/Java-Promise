@@ -19,7 +19,7 @@ public class Promise_Spec_2_2_Test {
     @Before
     public void Init() {
 
-        testObject = null;
+        testObject = new Promise();
 
         calls = 0;
     }
@@ -37,14 +37,14 @@ public class Promise_Spec_2_2_Test {
     @Test
     public void onResolve_must_be_called_after_promise_is_fulfilled() {
 
-        testObject = new Promise(new ResolveCallback() {
+        testObject.then(new ResolveCallback() {
             @Override
             public void onResolved() {
                 calls++;
             }
         }, null);
 
-        testObject.Resolve();
+        testObject.resolve();
 
         assertEquals(1, calls);
     }
@@ -53,7 +53,7 @@ public class Promise_Spec_2_2_Test {
     @Test
     public void onResolve_must_not_be_called_before_promise_is_fulfilled() {
 
-        testObject = new Promise(new ResolveCallback() {
+        testObject.then(new ResolveCallback() {
             @Override
             public void onResolved() {
                 calls++;
@@ -62,23 +62,23 @@ public class Promise_Spec_2_2_Test {
 
         assertEquals(0, calls);
 
-        testObject.Resolve();
+        testObject.resolve();
     }
 
     //  2.2.2.3 it must not be called more than once.
     @Test
     public void onResolve_must_not_be_called_more_than_once() {
 
-        testObject = new Promise(new ResolveCallback() {
+        testObject.then(new ResolveCallback() {
             @Override
             public void onResolved() {
                 calls++;
             }
         }, null);
 
-        testObject.Resolve();
+        testObject.resolve();
 
-        testObject.Resolve();
+        testObject.resolve();
 
         assertEquals(1, calls);
     }
@@ -91,7 +91,7 @@ public class Promise_Spec_2_2_Test {
 
         final Exception expectedException = new Exception("foo");
 
-        testObject = new Promise(null, new RejectCallback() {
+        testObject.then(null, new RejectCallback() {
             @Override
             public void onRejected(Exception ex) {
                 assertEquals(expectedException, ex);
@@ -99,7 +99,7 @@ public class Promise_Spec_2_2_Test {
             }
         });
 
-        testObject.Reject(expectedException);
+        testObject.reject(expectedException);
 
         assertEquals(1, calls);
     }
@@ -108,7 +108,7 @@ public class Promise_Spec_2_2_Test {
     @Test
     public void onRejected_must_not_be_called_before_promise_is_rejected() {
 
-        testObject = new Promise(null, new RejectCallback() {
+        testObject.then(null, new RejectCallback() {
             @Override
             public void onRejected(Exception ex) {
                 calls++;
@@ -124,7 +124,7 @@ public class Promise_Spec_2_2_Test {
 
         final Exception expectedException = new Exception("foo");
 
-        testObject = new Promise(null, new RejectCallback() {
+        testObject.then(null, new RejectCallback() {
             @Override
             public void onRejected(Exception ex) {
                 assertEquals(expectedException, ex);
@@ -132,8 +132,8 @@ public class Promise_Spec_2_2_Test {
             }
         });
 
-        testObject.Reject(expectedException);
-        testObject.Reject(expectedException);
+        testObject.reject(expectedException);
+        testObject.reject(expectedException);
 
         assertEquals(1, calls);
     }
@@ -143,6 +143,7 @@ public class Promise_Spec_2_2_Test {
 
     //  2.2.5
     //  onFulfilled and onRejected must be called as functions (i.e. with no this value). [3.2]
+    //  -- not applicable for Java
 
     //  2.2.6
     //  then may be called multiple times on the same promise.
