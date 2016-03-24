@@ -387,6 +387,40 @@ public class Generic_Promise_Spec_2_2_Test {
         assertEquals(1, promiseResults.size());
         assertEquals(5, promiseResults.get(0).intValue());
     }
+
+    /*
+     * 2.2.7.1.2
+     */
+    @Test
+    public void onRejected_returns_a_value_x_run_the_Promise_Resolution_Procedure() {
+
+        final List<Exception> promiseRejections = new ArrayList<>();
+
+        Exception testException = new Exception("Test Exception");
+
+        Promise<Integer> promise2 = testObject.then(new ResolveCallback<Integer>() {
+
+            @Override
+            public void onResolved(Integer result) {
+
+                // No action required for test.
+            }
+        });
+
+        promise2.handle(new RejectCallback() {
+
+            @Override
+            public void onRejected(Exception ex) {
+
+                promiseRejections.add(ex);
+            }
+        });
+
+        testObject.reject(testException);
+
+        assertEquals(1, promiseRejections.size());
+        assertEquals(testException, promiseRejections.get(0));
+    }
     
     //  2.2.7.2 If either onFulfilled or onRejected throws an exception e, promise2 must be rejected with e as the reason.
     //  2.2.7.3 If onFulfilled is not a function and promise1 is fulfilled, promise2 must be fulfilled with the same value as promise1.

@@ -3,7 +3,7 @@ package com.java_promise.genericpromise;
 import com.java_promise.common.RejectCallback;
 import com.java_promise.common.State;
 import com.java_promise.common.ActionablePromise;
-import com.java_promise.common.Tuple;
+import com.java_promise.common.Actionable;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -30,18 +30,27 @@ public class Promise<TypeT>
     public Exception Reason;
 
     /**
-     * Called when the promise is resolved.
+     * Called when the promise is resolved or rejected.
      */
-    private List<Tuple<ResolveCallback<TypeT>, ActionablePromise<TypeT>>> resolveCallbacks = new ArrayList<>();
-
-    /**
-     * Called when the promise is rejected.
-     */
-    private List<RejectCallback> rejectCallbacks = new ArrayList<>();
+    private List<Actionable<TypeT>> actionables = new ArrayList<>();
 
     public Promise() {
 
         State = State.Pending;
+    }
+
+    /**
+     * Registers a new actionable.
+     * @param resolveCallback
+     * @param rejectCallback
+     * @param promise
+     */
+    private void registerActionables(
+            ResolveCallback<TypeT> resolveCallback,
+            RejectCallback rejectCallback,
+            ActionablePromise promise) {
+
+        actionables.add(new Actionable(resolveCallback, rejectCallback, promise));
     }
 
     /**
@@ -59,18 +68,22 @@ public class Promise<TypeT>
 
         Result = result;
 
-        if (resolveCallbacks.size() > 0) {
+        if (actionables.size() > 0) {
 
-            for (Tuple<ResolveCallback<TypeT>, ActionablePromise<TypeT>> callback : resolveCallbacks) {
+            for (Actionable<TypeT> actionable : actionables) {
 
                 try {
 
-                    callback.A.onResolved(result);
-                    callback.B.resolve(result);
+                    if (actionable.ResolveCallback != null) {
+
+                        actionable.ResolveCallback.onResolved(result);
+                    }
+
+                    actionable.ActionablePromise.resolve(result);
 
                 } catch (Exception ex) {
 
-                    callback.B.reject(ex);
+                    actionable.ActionablePromise.reject(ex);
                 }
             }
         }
@@ -91,11 +104,27 @@ public class Promise<TypeT>
 
         Reason = ex;
 
-        if (rejectCallbacks.size() > 0) {
+        if (actionables.size() > 0) {
 
-            for (RejectCallback callback : rejectCallbacks) {
+            for (Actionable<TypeT> actionable : actionables) {
 
-                callback.onRejected(Reason);
+                if (actionable.RejectCallback!= null) {
+
+                    try {
+
+                        actionable.RejectCallback.onRejected(ex);
+
+                    } catch (Exception exception) {
+
+                        // todo: I need to use the equivalent of a inner exception.
+                        actionable.ActionablePromise.reject(exception);
+                    }
+                }
+
+                if (actionable.ActionablePromise != null) {
+
+                    actionable.ActionablePromise.reject(ex);
+                }
             }
         }
     }
@@ -109,15 +138,7 @@ public class Promise<TypeT>
 
         Promise<TypeT> newPromise = new Promise<>();
 
-        if (resolveCallback != null) {
-
-            resolveCallbacks.add(new Tuple<ResolveCallback<TypeT>, ActionablePromise<TypeT>>(resolveCallback, newPromise));
-        }
-
-        if (rejectCallback != null) {
-
-            rejectCallbacks.add(rejectCallback);
-        }
+        registerActionables(resolveCallback, rejectCallback, newPromise);
 
         return newPromise;
     }
@@ -137,6 +158,6 @@ public class Promise<TypeT>
      */
     public void handle(RejectCallback rejectCallback) {
 
-        then(null, rejectCallback);
+        registerActionables(null, rejectCallback, null);
     }
 }
