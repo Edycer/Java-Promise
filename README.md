@@ -18,6 +18,10 @@ https://www.jetbrains.com/idea/download/
 
 ## Open project
 
+Open the project in Intellij by pressing **Open and selecting the project folder.
+
+![Open Project](README/Open_Project.JPG)
+
 ## Add JDK to IntelliJ
 
 Once the project has opened open the Module Settings for the Java-Promise project by **right-clicking on the project** then select **Open Module Settings**.
