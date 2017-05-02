@@ -22,15 +22,15 @@ https://www.jetbrains.com/idea/download/
 
 Once the project has opened open the Module Settings for the Java-Promise project by **right-clicking on the project** then select **Open Module Settings**.
 
-![Open Module Settings](Readme/Open_Module_Settings.JPG)
+![Open Module Settings](README/Open_Module_Settings.JPG)
 
 Add the JDK installed earlier by pressing the **Plus icon in the SDKs tab**.
 
-![Add JDK](Readme/Add_JDK.JPG)
+![Add JDK](README/Add_JDK.JPG)
 
 Once the JDK has been added to the SDK list select the **Project SDK in the Project Tab**
 
-![Project](Readme/Project_SDK.JPG)
+![Project](README/Project_SDK.JPG)
 
 Ensure that you select a **Project Language Level** of 7 or later as well to ensure that generics are supported. 
 
@@ -38,11 +38,11 @@ Ensure that you select a **Project Language Level** of 7 or later as well to ens
 
 Once you have your environment setup you can build the project by  selecting **Build Project in the Build menu**.
 
-![Build](Readme/Build.JPG)
+![Build](README/Build.JPG)
 
 ## Run tests
 
 To run the tests select **Run 'All in Java-Promise' in the Run menu dropdown**. 
 
-![Run Tests](Readme/Run.JPG)
+![Run Tests](README/Run.JPG)
 
