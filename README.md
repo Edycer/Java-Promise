@@ -18,7 +18,7 @@ https://www.jetbrains.com/idea/download/
 
 ## Open project
 
-Open the project in Intellij by pressing **Open and selecting the project folder.
+Open the project in Intellij by pressing **Open and selecting the project folder and clicking Ok**.
 
 ![Open Project](README/Open_Project.JPG)
 
